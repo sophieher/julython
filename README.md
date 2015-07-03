@@ -1,2 +1,3 @@
 # julython
-Not sure what i'm going to be working on yet, but I'd better get going and get some commits in there.
+
+Porting my django_tutorial mess of an app to a flask app. Cropping out the polls tutorial also, and just including food mood here.
