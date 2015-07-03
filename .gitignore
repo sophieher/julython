@@ -1,0 +1,11 @@
+.uploads/*
+*.pyc
+.coverage
+coverage.xml
+tests/test-results.xml
+*.idea
+.env
+.env_py2
+build
+.upload
+.DS_Store
