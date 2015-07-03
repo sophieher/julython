@@ -1,5 +1,7 @@
 # all the imports
 from flask import Flask, render_template
+from flask.ext.sqlalchemy import SQLAlchemy
+import models
 
 # configuration
 DATABASE = ''
@@ -10,6 +12,8 @@ PASSWORD = ''
 
 app = Flask(__name__)
 app.config.from_object(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://postgres:sophie@localhost/food_mood'
+db = SQLAlchemy(app)
 
 
 @app.route('/')
