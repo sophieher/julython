@@ -19,8 +19,8 @@
    }(document, 'script', 'facebook-jssdk'));
 </script>
    
-    {% if user.is_authenticated %}
-    <h1><img src="{{ user.profile.profile_image_url }}" alt=" " width="80px"/> hello <a href="profile">{{ user.username }}!</a></h1>
+    {% if g.user.is_authenticated %}
+    <h1><img src="#" alt=" " width="80px"/> hello <a href="profile">{{ g.user.username }}!</a></h1>
     <a href="entries">My food/moods!<br />
     <a href="add"><button type="button" class="btn-add">Add!</button></a>
     
@@ -28,13 +28,9 @@
 
     {% else %}
     <h1>Welcome to Food Mood</h1>
-    <p>
-        {% load socialaccount %}
-        <a href="{% provider_login_url "facebook" method="oauth2" %}">Sign in with Facebook</a> or 
-        <a href="{% provider_login_url "google" method="oauth2" %}">Sign in with Google</a><br />
-        
-        <a href="/accounts/login/">Login</a><br />
-        <a href="/accounts/signup/">Sign Up Here!</a>
+    <p> 
+        <a href="/login/">Login</a><br />
+        <a href="/signup/">Sign Up Here!</a>
     </p>
     {% endif %}
 {% endblock %}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>FoodMood Login</title>
+    </head>
+
+    <body>
+        <h1>Login to FoodMood</h1>
+
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+            Username: <input type="text" name="username" value="" size="50" />
+            <br />
+            Password: <input type="password" name="password" value="" size="50" />
+            <br />
+
+            <input type="submit" value="submit" />
+    </body>
+</html>

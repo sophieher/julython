@@ -1,18 +1,50 @@
 from datetime import datetime
+from flask import current_app as app
 
-from food_mood import db
+from food_mood import db, login_manager
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    meal = db.Column(db.Integer, default=1)   # number of the meal, 1 for first, etc
+    meal = db.Column(db.Integer, default=1)   # number of the meal, 1 for breakfast, etc
     food = db.Column(db.String(200))
     mood = db.Column(db.Integer, default=5)  # mood from 1 sucky to 10 the best
     pub_date = db.Column(db.Date(), default=datetime.today, nullable=False)
-    # eater = db.Column(ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='entries'))
+    eater = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return self.food
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(64), index=True, unique=True)
+    _password = db.Column('password', db.String(128))
+    email = db.Column(db.String(120), index=True, unique=True)
+    entries = db.relationship('Entry', backref='user', lazy='dynamic')
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def get_id(self):
+        return str(self.id)
+
+    @property
+    def password(self):
+        return self._password
+
+    def set_password(self, password):
+        self._password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self._password, password)
+
+    def __repr__(self):
+        return self.username
 
 
 # class UserProfile(db.Model):
