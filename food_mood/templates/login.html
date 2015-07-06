@@ -1,18 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "base.html" %}
         <title>FoodMood Login</title>
-    </head>
 
-    <body>
+{% block content %}
         <h1>Login to FoodMood</h1>
-
-            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
-            Username: <input type="text" name="username" value="" size="50" />
-            <br />
-            Password: <input type="password" name="password" value="" size="50" />
-            <br />
-
-            <input type="submit" value="submit" />
-    </body>
-</html>
+        <form id="login_form" method="post" action="/login">
+            <div>{{ form.username.label }}: {{ form.username() }}</div>
+            <div>{{ form.password.label }}: {{ form.password() }}</div>
+            <button type="submit">login</button>
+        </form>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+    
+{% block content %}
+
+    <form id="add_form" method="post" action="{% url 'food_mood:add' %}" method='post'>
+        {% csrf_token %}
+         <p>What meal is this for you? (1=Breakfast, 2=Lunch, 3=Dinner, 4=Snack, 5=Midnight)</p>
+            <p><input type="number" name="meal" min="1" max="5" /></p>
+        <p>What food did you eat?</p>
+            <p><input type='text' name='food' placeholder='food' /> </p>
+        <p>What is your mood? (Scale 1-10, from the worst to the best ever!!)</p>
+            <p>
+                {{ add_form.mood }}<output id="emoji"><img src="http://twemoji.maxcdn.com/72x72/1f610.png" /></output>
+            </p>
+        <input type='submit' class='btn-add' value='Add' />
+    </form>
+    <!-- Twemoji by Twitter 2014 Code licensed under the MIT License Graphics licensed under CC-BY 4.0-->
+    <script type="text/javascript" src="/static/js/emoji-picker.js"></script>
+{% endblock %}

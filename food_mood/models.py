@@ -43,6 +43,11 @@ class User(db.Model):
     def check_password(self, password):
         return check_password_hash(self._password, password)
 
+    def __init__(self, username, email, password):
+        self.username = username
+        self.email = email
+        self.set_password(password)
+
     def __repr__(self):
         return self.username
 
