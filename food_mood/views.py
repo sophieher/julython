@@ -3,8 +3,8 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 
 from food_mood import app, db_session, login_manager
 
-from .models import User
-from .forms import LoginForm, SignupForm
+from .models import User, Entry
+from .forms import AddForm, LoginForm, SignupForm
 
 
 @app.before_request
@@ -69,6 +69,28 @@ def signup():
         except:
             abort(500)
     return render_template('signup.html', form=form)
+
+
+@app.route('/add', methods=['GET', 'POST'])
+@login_required
+def add_food_mood():
+
+    if request.method == 'POST':
+        add_form = AddForm(request.form)
+        eater = current_user
+
+        if add_form.validate():
+            entry = Entry(add_form.meal.data, add_form.food.data, add_form.mood.data, eater=current_user.get_id())
+            db_session.add(entry)
+            db_session.commit()
+            return redirect('/')
+        else:
+            abort(500)
+
+    else:
+        add_form = AddForm()
+
+    return render_template('add.html', form=add_form)
 
 
 @app.route('/logout')

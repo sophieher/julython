@@ -16,6 +16,13 @@ class Entry(db.Model):
     def __repr__(self):
         return self.food
 
+    def __init__(self, meal, food, mood, eater):
+        self.meal = meal
+        self.food = food
+        self.mood = mood
+        self.eater = eater
+        self.pub_date = datetime.now()
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)

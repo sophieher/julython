@@ -1,4 +1,5 @@
-from wtforms import Form, BooleanField, TextField, PasswordField, validators
+from wtforms import Form, BooleanField, IntegerField, TextField, PasswordField, validators
+from flask.ext.wtf.html5 import NumberInput
 
 
 class SignupForm(Form):
@@ -10,3 +11,9 @@ class SignupForm(Form):
 class LoginForm(Form):
     username = TextField('username', [validators.Length(min=3, max=64)])
     password = PasswordField('password', [validators.Length(min=8), validators.Required()])
+
+
+class AddForm(Form):
+    meal = IntegerField(widget=NumberInput())
+    food = TextField()
+    mood = IntegerField(widget=NumberInput())
