@@ -35,10 +35,10 @@
 	<nav class="tabs responsive">
 		<ul class="nav nav-tabs">
 			<li role="presentation"><a href="#">About</a></li>
-
+			{% if current_user.is_authenticated() %}
 			<li role="presentation" class="dropdown pull-right">
 		  	  <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-				{{ g.user.username }}
+				{{ current_user.username }}
 		      <span class="caret"></span>
 			  <ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenu1">
 	    		  <li role="presentation"><a role="menuitem" tabindex="-1" href="/profile">Profile</a></li>
@@ -46,6 +46,7 @@
 				  <li role="presentation"><a role="menuitem" tabindex="-1" href="/logout">Logout</a></li>
 		  	  </ul>
 	  	    </li> <!-- End Dropdown -->
+	  	    {% endif %}
 		</ul>
 	</nav>
 	

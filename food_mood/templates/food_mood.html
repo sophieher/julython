@@ -19,8 +19,8 @@
    }(document, 'script', 'facebook-jssdk'));
 </script>
    
-    {% if g.user.is_authenticated %}
-    <h1><img src="#" alt=" " width="80px"/> hello <a href="profile">{{ g.user.username }}!</a></h1>
+    {% if current_user.is_authenticated() %}
+    <h1><img src="#" alt=" " width="80px"/> hello <a href="profile">{{ current_user.username }}!</a></h1>
     <a href="entries">My food/moods!<br />
     <a href="add"><button type="button" class="btn-add">Add!</button></a>
     
@@ -29,8 +29,8 @@
     {% else %}
     <h1>Welcome to Food Mood</h1>
     <p> 
-        <a href="/login/">Login</a><br />
-        <a href="/signup/">Sign Up Here!</a>
+        <a href="/login">Login</a><br />
+        <a href="/signup">Sign Up Here!</a>
     </p>
     {% endif %}
 {% endblock %}
