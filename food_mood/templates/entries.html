@@ -1,0 +1,18 @@
+{% extends 'food_mood.html' %}
+
+{% block content %}
+	<div class="col-xs-11 col-md-11 col-lg-12">
+	{% for entry in entries %}
+	<section class="entry">
+
+	<h2><a href="/entries/{{ entry.id }}">{{ entry.pub_date }}</a></h2>
+		<p>{{ entry.food | upper }}</p>
+		<p id="emoji">{{ entry.mood }}</p>
+		<br />
+		<hr>
+	</section>
+	
+	{% endfor %}
+</div>
+	<a href="add"><button type="button" class="btn-add">Add!</button></a><br /><br />
+{% endblock %}

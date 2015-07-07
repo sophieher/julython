@@ -1,0 +1,10 @@
+{% extends 'food_mood.html' %}
+
+{% block content %}
+	<section class="entry">
+	<h2><a href="/entries/{{ entry.id }}">{{ entry.pub_date }}</a></h2>
+		<p>{{ entry.food | upper }}</p>
+		<p>{{ entry.mood }}</p>
+		<p id="author">Added by: {{ author }}</p>
+	</section>
+{% endblock %}

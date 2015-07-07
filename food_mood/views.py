@@ -78,7 +78,6 @@ def add_food_mood():
     if request.method == 'POST':
         add_form = AddForm(request.form)
         eater = current_user
-
         if add_form.validate():
             entry = Entry(add_form.meal.data, add_form.food.data, add_form.mood.data, eater=current_user.get_id())
             db_session.add(entry)
@@ -86,11 +85,23 @@ def add_food_mood():
             return redirect('/')
         else:
             abort(500)
-
     else:
         add_form = AddForm()
 
     return render_template('add.html', form=add_form)
+
+
+@app.route('/entries/<entry_id>/', methods=['GET'])
+def entry(entry_id=None):
+    if entry_id is not None:
+        entry = Entry.query.get(entry_id)
+        return render_template('entry.html', entry=entry)
+
+
+# TODO: Fix this grossness of having two routes for the same endpoint
+@app.route('/entries', methods=['GET'])
+def entries():
+        return render_template('entries.html', entries=Entry.query.filter_by(eater=current_user.id), author=current_user.username)
 
 
 @app.route('/logout')
