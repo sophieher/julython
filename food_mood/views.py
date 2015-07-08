@@ -1,4 +1,4 @@
-from flask import abort, jsonify, redirect, render_template, request, session, url_for, g
+from flask import abort, redirect, render_template, request, url_for, g
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.login import login_user, logout_user, current_user, login_required
 
@@ -64,7 +64,6 @@ def add_food_mood():
 
     if request.method == 'POST':
         add_form = AddForm(request.form)
-        eater = current_user
         if add_form.validate():
             entry = Entry(add_form.meal.data, add_form.food.data, add_form.mood.data, eater=current_user.get_id())
             db_session.add(entry)
@@ -82,7 +81,7 @@ def add_food_mood():
 def entry(entry_id=None):
     if entry_id is not None:
         entry = Entry.query.get(entry_id)
-        return render_template('entry.html', entry=entry)
+        return render_template('entry.html', entry=entry, author=current_user.username)
 
 
 # TODO: Fix this grossness of having two routes for the same endpoint

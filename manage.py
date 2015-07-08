@@ -23,7 +23,7 @@ def check_defaults(*a, **kw):
 
 def _make_context():
     print('connected to db: {}'.format(db.get_engine().url))
-    return dict(app=app, db=db, models=api.models)
+    return dict(app=app, db=db, models=food_mood.models)
 
 manager = Manager(app)
 manager.add_command('db', MigrateCommand)

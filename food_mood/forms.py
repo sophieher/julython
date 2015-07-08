@@ -1,6 +1,5 @@
 from flask.ext.wtf import Form
 from wtforms import IntegerField, TextField, PasswordField, validators
-from flask.ext.wtf.html5 import NumberInput
 
 
 class SignupForm(Form):
@@ -15,6 +14,6 @@ class LoginForm(Form):
 
 
 class AddForm(Form):
-    meal = IntegerField(widget=NumberInput())
+    meal = IntegerField()
     food = TextField()
-    mood = IntegerField(widget=NumberInput())
+    mood = IntegerField()

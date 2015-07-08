@@ -11,7 +11,10 @@
             <p>{{ form.food() }}</p>
         <p>What is your mood? (Scale 1-10, from the worst to the best ever!!)</p>
             <p>
-                {{ form.mood() }}<output id="emoji"><img src="http://twemoji.maxcdn.com/72x72/1f610.png" /></output>
+                {{ form.mood(min='1', max='10', type='number',oninput="updateTextInput(value);") }}<output id="emoji"><img src="http://twemoji.maxcdn.com/72x72/1f610.png" /></output>
+                {% if form.mood.errors %}
+        <ul class="errors">{% for error in form.mood.errors %}<li>{{ error }}</li>{% endfor %}</ul>
+    {% endif %}
             </p>
         <input type='submit' class='btn-add' value='Add' />
     </form>

@@ -1,7 +1,6 @@
 from datetime import datetime
-from flask import current_app as app
 
-from food_mood import db, login_manager
+from food_mood import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
