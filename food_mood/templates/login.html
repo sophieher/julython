@@ -4,6 +4,7 @@
 {% block content %}
         <h1>Login to FoodMood</h1>
         <form id="login_form" method="post" action="/login">
+            <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
             <div>{{ form.username.label }}: {{ form.username() }}</div>
             <div>{{ form.password.label }}: {{ form.password() }}</div>
             <button type="submit">login</button>

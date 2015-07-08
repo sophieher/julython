@@ -4,7 +4,8 @@
 {% block content %}
 
     <form id="add_form" method="post" action="/add" method='post'>
-         <p>What meal is this for you? (1=Breakfast, 2=Lunch, 3=Dinner, 4=Snack, 5=Midnight)</p>
+        <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+        <p>What meal is this for you? (1=Breakfast, 2=Lunch, 3=Dinner, 4=Snack, 5=Midnight)</p>
             <p>{{ form.meal() }}</p>
         <p>What food did you eat?</p>
             <p>{{ form.food() }}</p>

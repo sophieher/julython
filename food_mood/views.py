@@ -1,4 +1,5 @@
 from flask import abort, jsonify, redirect, render_template, request, session, url_for, g
+from flask_wtf.csrf import CsrfProtect
 from flask.ext.login import login_user, logout_user, current_user, login_required
 
 from food_mood import app, db_session, login_manager
@@ -6,31 +7,17 @@ from food_mood import app, db_session, login_manager
 from .models import User, Entry
 from .forms import AddForm, LoginForm, SignupForm
 
+CsrfProtect(app)
+
 
 @app.before_request
 def before_request():
     g.user = current_user
 
 
-# @app.before_request
-# def csrf_protect():
-#     if request.method == "POST":
-#         token = session.pop('_csrf_token', None)
-#         if not token or token != request.form.get('_csrf_token'):
-#             abort(403)
-
-
-def generate_csrf_token():
-    if '_csrf_token' not in session:
-        session['_csrf_token'] = 'flazeda'
-    return session['_csrf_token']
-
-
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
-
-app.jinja_env.globals['csrf_token'] = generate_csrf_token
 
 
 @login_manager.user_loader

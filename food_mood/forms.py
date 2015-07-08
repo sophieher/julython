@@ -1,4 +1,5 @@
-from wtforms import Form, BooleanField, IntegerField, TextField, PasswordField, validators
+from flask.ext.wtf import Form
+from wtforms import IntegerField, TextField, PasswordField, validators
 from flask.ext.wtf.html5 import NumberInput
 
 
