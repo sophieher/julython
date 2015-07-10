@@ -50,7 +50,7 @@ def signup():
         user = User(form.username.data, form.email.data, form.password.data)
         db_session.add(user)
         db_session.commit()
-        login_user()
+        login_user(user)
         try:
             return redirect(url_for('home'))
         except:
