@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import IntegerField, TextField, PasswordField, validators
+from wtforms import FileField, IntegerField, TextField, PasswordField, validators
 
 
 class SignupForm(Form):
@@ -17,3 +17,7 @@ class AddForm(Form):
     meal = IntegerField()
     food = TextField()
     mood = IntegerField()
+
+
+class PhotoForm(Form):
+    image = FileField('Image File')

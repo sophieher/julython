@@ -1,13 +1,19 @@
+import os
+import logging
+
 from flask import abort, redirect, render_template, request, url_for, g
 from flask_wtf.csrf import CsrfProtect
 from flask.ext.login import login_user, logout_user, current_user, login_required
+from werkzeug import secure_filename
 
 from food_mood import app, db_session, login_manager
 
-from .models import User, Entry
-from .forms import AddForm, LoginForm, SignupForm
+from .models import User, Entry, UserProfile
+from .forms import AddForm, LoginForm, SignupForm, PhotoForm
 
 CsrfProtect(app)
+
+logger = logging.getLogger(__name__)
 
 
 @app.before_request
@@ -27,7 +33,10 @@ def load_user(id):
 
 @app.route('/')
 def home():
-    return render_template('food_mood.html')
+    if not current_user.is_anonymous():
+        up = UserProfile.query.filter_by(user=1).first().photo
+        return render_template('food_mood.html', up=up)
+    return render_template('food_mood.html', up=None)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -39,7 +48,7 @@ def login():
             login_user(user)
             return redirect(url_for('home'))
         else:
-            return redirect(url_for('login'))
+            return redirect('/login')
     return render_template('login.html', form=form)
 
 
@@ -95,3 +104,25 @@ def entries():
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+
+
+@app.route('/users/profile_image', methods=['GET', 'POST'])
+@login_required
+def upload_file():
+    form = PhotoForm()
+    if request.method == 'POST':
+        file = request.files[form.image.name]
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            up = UserProfile(user=current_user.id)
+            up.photo = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+            db_session.add(up)
+            db_session.commit()
+            return redirect('/')
+    return render_template('photo.html', form=form)

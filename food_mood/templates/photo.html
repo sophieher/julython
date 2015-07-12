@@ -1,0 +1,9 @@
+
+<!doctype html>
+<title>Upload new File</title>
+<h1>Upload new File</h1>
+<form action="/users/profile_image" method=post enctype=multipart/form-data>
+     <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
+     <div>{{ form.image() }}</div>
+     <input type=submit value=Upload>
+</form>

@@ -1,6 +1,8 @@
 # all the imports
+
 from flask import Flask
 app = Flask(__name__)
+
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.login import LoginManager
 from sqlalchemy import create_engine

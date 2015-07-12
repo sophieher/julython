@@ -5,3 +5,6 @@ SECRET_KEY = 'heyyy'
 USERNAME = 'admin'
 PASSWORD = ''
 SQLALCHEMY_DATABASE_URI = DATABASE
+
+UPLOAD_FOLDER = 'food_mood/static/images'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])

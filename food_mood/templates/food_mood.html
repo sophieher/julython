@@ -20,7 +20,7 @@
 </script>
    
     {% if current_user.is_authenticated() %}
-    <h1><img src="#" alt=" " width="80px"/> hello <a href="profile">{{ current_user.username }}!</a></h1>
+    <h1><img src="/static/images/{{ up }}" alt="user profile image" width="80px"/> hello <a href="profile">{{ current_user.username }}!</a></h1>
     <a href="entries">My food/moods!<br />
     <a href="add"><button type="button" class="btn-add">Add!</button></a>
     {% else %}

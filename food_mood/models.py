@@ -5,12 +5,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Entry(db.Model):
+
+    __tablename__ = 'entries'
+
     id = db.Column(db.Integer, primary_key=True)
     meal = db.Column(db.Integer, default=1)   # number of the meal, 1 for breakfast, etc
     food = db.Column(db.String(200))
     mood = db.Column(db.Integer, default=5)  # mood from 1 sucky to 10 the best
     pub_date = db.Column(db.Date(), default=datetime.today, nullable=False)
-    eater = db.Column(db.Integer, db.ForeignKey('user.id'))
+    eater = db.Column(db.Integer, db.ForeignKey('users.id'))
 
     def __repr__(self):
         return self.food
@@ -24,11 +27,14 @@ class Entry(db.Model):
 
 
 class User(db.Model):
+
+    __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     _password = db.Column('password', db.String(128))
     email = db.Column(db.String(120), index=True, unique=True)
-    entries = db.relationship('Entry', backref='user', lazy='dynamic')
+    entries = db.relationship('Entry', backref='users', lazy='dynamic')
 
     def is_authenticated(self):
         return True
@@ -61,13 +67,13 @@ class User(db.Model):
         return self.username
 
 
-# class UserProfile(db.Model):
-#     # This line is required. Links UserProfile to a User model instance.
-#     user = models.OneToOneField(User, blank=True, null=True, on_delete=models.SET_NULL, related_name='profile')
+class UserProfile(db.Model):
+    __tablename__ = 'user_profile'
 
-#     # The additional attributes we wish to include.
-#     website = models.URLField(blank=True)
-#     photo = models.ImageField(upload_to='/static/profile_images/', blank=True)
+    id = db.Column(db.Integer, primary_key=True)
+    website = db.Column(db.String(100))
+    photo = db.Column(db.String(255))
+    user = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 #     # thanks to sarahhagstrom for this unicode output
 #     def __unicode__(self):
@@ -82,7 +88,6 @@ class User(db.Model):
 #         return self.photo.url[47:]
 
 #         class Meta:
-#             db_table = 'user_profile'
 
 #             def account_verified(self):
 #                 if self.user.is_authenticated:
