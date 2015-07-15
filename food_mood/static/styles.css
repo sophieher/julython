@@ -10,7 +10,7 @@ a {
   text-decoration: none; }
 
 .container {
-  width: 960px;
+  width: 960fimx;
   margin: auto; }
 
 header {
@@ -74,5 +74,9 @@ button {
 .entry p {
   text-align: center;
   font-size: 200%; }
+
+.profile-image {
+  width: 42px;
+}
 
 /*# sourceMappingURL=styles.css.map */

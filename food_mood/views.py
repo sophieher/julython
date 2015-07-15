@@ -34,8 +34,7 @@ def load_user(id):
 @app.route('/')
 def home():
     if not current_user.is_anonymous():
-        up = UserProfile.query.filter_by(user=1).first().photo
-        return render_template('food_mood.html', up=up)
+        return render_template('food_mood.html', up=current_user.profile)
     return render_template('food_mood.html', up=None)
 
 
@@ -126,3 +125,9 @@ def upload_file():
             db_session.commit()
             return redirect('/')
     return render_template('photo.html', form=form)
+
+@app.route('/users/<user_id>/profile', methods=['GET'])
+@login_required
+def profile(user_id=None):
+    user = User.query.get(user_id) or abort(404)
+    return render_template('profile.html', user=user)

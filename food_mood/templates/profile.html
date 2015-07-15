@@ -1,0 +1,15 @@
+{% extends "food_mood.html" %}
+
+
+{% block head_title %}Profile{% endblock %}
+
+{% block content %}
+<div class="profile">
+	<img src="/static/images/{{ user.profile.photo }}" class="profile-image" alt='profile image'>
+
+	<h1>{{ user.username }}</h1>
+	<p>website: {{ user.profile.website }}</p>
+</div>
+{% endblock %}
+
+

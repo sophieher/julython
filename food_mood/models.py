@@ -35,6 +35,7 @@ class User(db.Model):
     _password = db.Column('password', db.String(128))
     email = db.Column(db.String(120), index=True, unique=True)
     entries = db.relationship('Entry', backref='users', lazy='dynamic')
+    profile = db.relationship('UserProfile', uselist=False, backref='profile')
 
     def is_authenticated(self):
         return True
