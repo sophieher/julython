@@ -9,3 +9,5 @@ tests/test-results.xml
 build
 .upload
 .DS_Store
+food_mood/static/images/
+
