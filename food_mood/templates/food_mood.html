@@ -1,24 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '620594911382829',
-      xfbml      : true,
-      version    : 'v2.2'
-    });
-  };
 
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-   
     {% if current_user.is_authenticated() %}
     <h1><img src="/static/images/{{ up.photo }}" alt="user profile image" width="80px"/> hello <a href="/users/{{ current_user.id }}/profile">{{ current_user.username }}!</a></h1>
     <a href="entries">My food/moods!<br />
@@ -30,4 +13,5 @@
         <a href="/signup">Sign Up Here!</a>
     </p>
     {% endif %}
+
 {% endblock %}

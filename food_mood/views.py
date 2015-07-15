@@ -126,6 +126,7 @@ def upload_file():
             return redirect('/')
     return render_template('photo.html', form=form)
 
+
 @app.route('/users/<user_id>/profile', methods=['GET'])
 @login_required
 def profile(user_id=None):
