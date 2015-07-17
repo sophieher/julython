@@ -3,7 +3,7 @@
     
 {% block content %}
 
-    <form id="add_form" method="post" action="/add" method='post'>
+    <form id="add_form" method="post" action="/entries/add" method='post'>
         <input name=_csrf_token type=hidden value="{{ csrf_token() }}">
         <p>What meal is this for you? (1=Breakfast, 2=Lunch, 3=Dinner, 4=Snack, 5=Midnight)</p>
             <p>{{ form.meal() }}</p>

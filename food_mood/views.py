@@ -66,7 +66,7 @@ def signup():
     return render_template('signup.html', form=form)
 
 
-@app.route('/add', methods=['GET', 'POST'])
+@app.route('/entries/add', methods=['GET', 'POST'])
 @login_required
 def add_food_mood():
 
@@ -76,7 +76,7 @@ def add_food_mood():
             entry = Entry(add_form.meal.data, add_form.food.data, add_form.mood.data, eater=current_user.get_id())
             db_session.add(entry)
             db_session.commit()
-            return redirect('/')
+            return redirect('/entries/')
         else:
             abort(500)
     else:
@@ -86,16 +86,12 @@ def add_food_mood():
 
 
 @app.route('/entries/<entry_id>/', methods=['GET'])
+@app.route('/entries/', methods=['GET'])
 def entry(entry_id=None):
     if entry_id is not None:
         entry = Entry.query.get(entry_id)
         return render_template('entry.html', entry=entry, author=current_user.username)
-
-
-# TODO: Fix this grossness of having two routes for the same endpoint
-@app.route('/entries', methods=['GET'])
-def entries():
-        return render_template('entries.html', entries=Entry.query.filter_by(eater=current_user.id), author=current_user.username)
+    return render_template('entries.html', entries=Entry.query.filter_by(eater=current_user.id), author=current_user.username)
 
 
 @app.route('/logout')
@@ -107,7 +103,7 @@ def logout():
 
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+        filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
 
 @app.route('/users/profile_image', methods=['GET', 'POST'])
