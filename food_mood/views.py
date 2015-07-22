@@ -8,8 +8,9 @@ from werkzeug import secure_filename
 
 from food_mood import app, db_session, login_manager
 
-from .models import User, Entry, UserProfile
 from .forms import AddForm, LoginForm, SignupForm, PhotoForm
+from .models import User, Entry, UserProfile
+from .utils import ts, send_email
 
 CsrfProtect(app)
 
@@ -51,7 +52,7 @@ def login():
     return render_template('login.html', form=form)
 
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/users/register', methods=['GET', 'POST'])
 def signup():
     form = SignupForm(request.form)
     if request.method == 'POST' and form.validate():
@@ -59,11 +60,36 @@ def signup():
         db_session.add(user)
         db_session.commit()
         login_user(user)
+
+        email_subject = 'Get started with FoodMood'
+        token = ts.dumps(user.email, salt='email-confirm-key')
+
+        confirm_url = 'http://localhost:5000/confirm/{}'.format(token)
+
+        template = render_template('email/verify.html', name=user.username, confirm_url=confirm_url)
+        send_email(user.email, email_subject, template)
+
         try:
             return redirect(url_for('home'))
         except:
             abort(500)
     return render_template('signup.html', form=form)
+
+
+@app.route('/confirm/<token>')
+def confirm_email(token):
+    try:
+        email = ts.loads(token, salt="email-confirm-key", max_age=86400)
+    except:
+        abort(404)
+
+    user = User.query.filter_by(email=email).first_or_404()
+    user.email_confirmed = True
+
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect(url_for('login'))
 
 
 @app.route('/entries/add', methods=['GET', 'POST'])

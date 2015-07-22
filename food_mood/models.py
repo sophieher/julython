@@ -36,6 +36,7 @@ class User(db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     entries = db.relationship('Entry', backref='users', lazy='dynamic')
     profile = db.relationship('UserProfile', uselist=False, backref='profile')
+    email_confirm = db.Column(db.Boolean, default=False, server_default='false')
 
     def is_authenticated(self):
         return True
