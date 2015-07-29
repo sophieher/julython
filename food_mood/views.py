@@ -84,10 +84,9 @@ def confirm_email(token):
         abort(404)
 
     user = User.query.filter_by(email=email).first_or_404()
-    user.email_confirmed = True
+    user.email_confirm = True
 
-    db.session.add(user)
-    db.session.commit()
+    db_session.commit()
 
     return redirect(url_for('login'))
 
